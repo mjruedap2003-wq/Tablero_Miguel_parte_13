@@ -4,41 +4,41 @@ from streamlit_drawable_canvas import st_canvas
 
 # 1. Configuración de página
 st.set_page_config(
-    page_title="CyberCanvas | Drawing Studio",
+    page_title="Tablero de Dibujo | Retos Rápidos",
     page_icon="🎨",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 2. Estilos Neón Cyberpunk (CSS)
+# 2. Estilos Neón Ajustados (Fondo menos oscuro + Textos Azul Brillante)
 st.markdown("""
     <style>
-    /* Fondo oscuro general */
+    /* Fondo general más claro/metálico para que resalte el tablero */
     .stApp {
-        background-color: #0A0E17 !important;
-        color: #E2E8F0 !important;
+        background-color: #1A1F2C !important;
+        color: #FFFFFF !important;
     }
 
     #MainMenu, footer, header {visibility: hidden;}
 
-    /* Título principal con resplandor cian */
+    /* Título principal */
     .neon-title {
         font-size: 2.3rem;
         font-weight: 900;
         text-align: center;
         color: #00F0FF;
-        text-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF, 0 0 40px #0077FF;
+        text-shadow: 0 0 10px #00F0FF, 0 0 20px #00F0FF;
         margin-bottom: 0.5rem;
     }
 
-    /* Caja de retos futurista */
+    /* Tarjeta de reto activo */
     .challenge-box {
-        background: #121826;
-        border: 2px solid #FF007F;
+        background: #252D3D;
+        border: 2px solid #00F0FF;
         border-radius: 12px;
         padding: 1.2rem;
         text-align: center;
-        box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
         margin-bottom: 1.5rem;
     }
 
@@ -55,7 +55,7 @@ st.markdown("""
         color: #00FF66;
         font-size: 1.5rem;
         font-weight: 800;
-        text-shadow: 0 0 10px #00FF66;
+        text-shadow: 0 0 8px #00FF66;
     }
 
     /* Botones Neón */
@@ -79,15 +79,31 @@ st.markdown("""
         transform: scale(1.02);
     }
 
-    /* Estilo del Sidebar */
+    /* Sidebar y Textos en Azul Brillante */
     section[data-testid="stSidebar"] {
-        background-color: #0D131F !important;
+        background-color: #121722 !important;
         border-right: 2px solid #00F0FF !important;
     }
 
-    /* Color Pickers y Sliders */
+    section[data-testid="stSidebar"] h2, 
+    section[data-testid="stSidebar"] h3, 
+    section[data-testid="stSidebar"] label, 
+    section[data-testid="stSidebar"] .stMarkdown {
+        color: #00F0FF !important;
+        font-weight: bold !important;
+        text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+    }
+
+    /* Marco para el lienzo del canvas */
+    iframe[title="streamlit_drawable_canvas.canvas"] {
+        border: 3px solid #00F0FF !important;
+        border-radius: 10px !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4) !important;
+    }
+
+    /* Color Pickers y Sliders ajustados */
     div[data-testid="stColorPicker"], div[data-testid="stSlider"] {
-        background-color: #121826;
+        background-color: #1A2232;
         padding: 10px;
         border-radius: 8px;
         border: 1px solid #00F0FF;
@@ -96,22 +112,24 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3. Encabezado
-st.markdown('<h1 class="neon-title">⚡ CYBERCANVAS: DRAWING STUDIO 🎨</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="neon-title">🎨 TABLERO DE DIBUJO & RETOS RÁPIDOS 🖌️</h1>', unsafe_allow_html=True)
 
-# 4. Banco de Retos de Dibujo Cyberpunk / Sci-Fi
+# 4. Banco de Retos Cotidianos y Fáciles
 CHALLENGES = [
-    "Un gato cyborg con implantes de neón y gafas holográficas.",
-    "Un puesto de ramen futurista bajo la lluvia en un callejón nocturno.",
-    "El rostro de un androide sintético reparando sus propios cables.",
-    "Un vehículo volador de carreras con estelas de luz cian.",
-    "Un robot callejero tocando la guitarra en una ciudad distópica.",
-    "Una planta cibernética creciendo dentro de una batería de plasma.",
-    "Un cazador de recompensas con un brazo robótico y abrigo largo.",
-    "Un dron mensajero entregando un paquete misterioso.",
-    "Un grafiti holográfico en la pared de un rascacielos.",
-    "Un casco cyberpunk personalizado con pegatinas y pantalla LED.",
-    "Un samurai cibernético sosteniendo una katana de luz.",
-    "Una criatura alienígena usando un ordenador antiguo."
+    "Un gato durmiendo una siesta.",
+    "Una taza de café caliente botando humo.",
+    "Un carro sencillo vista de lado.",
+    "Una rebanada de pizza de queso.",
+    "Un árbol de manzanas.",
+    "Un helado en cono de 2 bolas.",
+    "Un sol sonriente con gafas de sol.",
+    "Una casa de campo clásica con chimenea.",
+    "Un cohete despegando al espacio.",
+    "Un pez dentro de una pecera redonda.",
+    "Un perro feliz moviendo la cola.",
+    "Un pastel de cumpleaños con velas.",
+    "Un barco navegando en el mar.",
+    "Un bombillo encendido (idea)."
 ]
 
 # Estado de sesión para guardar el reto activo
@@ -128,14 +146,14 @@ with col_btn:
 with col_txt:
     st.markdown(f"""
         <div class="challenge-box">
-            <div class="challenge-title">⚠️ Reto de dibujo activo ⚠️</div>
+            <div class="challenge-title">✏️ Reto para dibujar ahora ✏️</div>
             <div class="challenge-text">"{st.session_state.current_challenge}"</div>
         </div>
     """, unsafe_allow_html=True)
 
 # 5. Barra Lateral (Propiedades del Tablero)
 with st.sidebar:
-    st.subheader("🛠️ Panel de Control Neón")
+    st.subheader("🛠️ Propiedades del Tablero")
 
     st.markdown("---")
     st.markdown("### 📐 Dimensiones")
@@ -145,23 +163,23 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("### 🖌️ Herramientas")
     drawing_mode = st.selectbox(
-        "Modo de Dibujo:",
+        "Herramienta de Dibujo:",
         ("freedraw", "line", "rect", "circle", "transform", "polygon", "point"),
     )
 
-    stroke_width = st.slider('Ancho del trazo', 1, 40, 5)
+    stroke_width = st.slider('Ancho de línea', 1, 40, 8)
 
     st.markdown("---")
-    st.markdown("### 🎨 Paleta Cyberpunk")
-    stroke_color = st.color_picker("Color de trazo", "#00F0FF")
-    bg_color = st.color_picker("Color de fondo", "#0A0E17")
+    st.markdown("### 🎨 Colores")
+    stroke_color = st.color_picker("Color de trazo", "#FFFFFF")
+    bg_color = st.color_picker("Color de fondo", "#000000")
 
 # 6. Renderizado del Canvas
 col_canvas, _ = st.columns([1, 0.01])
 
 with col_canvas:
     canvas_result = st_canvas(
-        fill_color="rgba(255, 0, 127, 0.3)",  # Relleno con transparencia rosada neón
+        fill_color="rgba(255, 0, 127, 0.3)",
         stroke_width=stroke_width,
         stroke_color=stroke_color,
         background_color=bg_color,
