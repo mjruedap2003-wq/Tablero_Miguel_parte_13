@@ -136,8 +136,8 @@ st.markdown('<h1 class="neon-title">🎨 TABLERO DE DIBUJO & RETOS RÁPIDOS 🖌
 st.markdown("""
     <div class="app-description-box">
         <p class="app-description-text">
-            <strong>📌 Sobre esta aplicación:</strong><br>
-            Escribe aquí tu párrafo explicando el propósito de la app. Puedes detallar cómo funciona el lienzo interactivo, la dinámica de los retos aleatorios y las herramientas de personalización disponibles en el panel lateral.
+            <strong>📌 Sobre esta aplicación melítica y ultra chimba:</strong><br>
+            ¡Bienvenido manín! Esta es una app ultra bacana para retarte a dibujar cosas, dale click al dado para generar un nuevo reto y si fallas, pailas, te sientes mal y punto jajajaja.
         </p>
     </div>
 """, unsafe_allow_html=True)
